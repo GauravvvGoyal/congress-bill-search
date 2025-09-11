@@ -1,0 +1,44 @@
+services:
+  tei-embed:
+    image: ghcr.io/huggingface/text-embeddings-inference:1.8
+    ports: 
+      - "8080:80"
+    command: ["--model-id", "nomic-ai/nomic-embed-text-v1.5"]
+    # Uncomment for GPU support:
+    # deploy:
+    #   resources:
+    #     reservations:
+    #       devices:
+    #         - driver: nvidia
+    #           count: 1
+    #           capabilities: [gpu]
+    environment:
+      - HUGGING_FACE_HUB_TOKEN=${HUGGING_FACE_HUB_TOKEN:-}
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:80/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+
+  tei-rerank:
+    image: ghcr.io/huggingface/text-embeddings-inference:1.8
+    ports: 
+      - "8081:80"
+    command: ["--model-id", "BAAI/bge-reranker-v2-m3"]
+    # Uncomment for GPU support:
+    # deploy:
+    #   resources:
+    #     reservations:
+    #       devices:
+    #         - driver: nvidia
+    #           count: 1
+    #           capabilities: [gpu]
+    environment:
+      - HUGGING_FACE_HUB_TOKEN=${HUGGING_FACE_HUB_TOKEN:-}
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:80/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
